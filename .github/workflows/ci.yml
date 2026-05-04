@@ -1,11 +1,20 @@
+name: Java Matrix CI
+
+# 1. PHẢI CÓ PHẦN NÀY: Định nghĩa sự kiện để kích hoạt robot
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
 jobs:
   build:
-    # Định nghĩa ma trận hệ điều hành
+    # 2. ĐỊNH NGHĨA MATRIX (MA TRẬN): Đây là chỗ nó "phân thân"
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-
-    # Sử dụng biến os từ ma trận
+    
+    # 3. Sử dụng biến os từ ma trận trên
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -19,5 +28,5 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run Maven Build (Test & Package)
-        run: mvn -B clean package
+      - name: Build and Test
+        run: mvn clean test
